@@ -7,7 +7,7 @@ export const router = {};
  * Changes the "page" (state) that your SPA app is currently set to
  */
 router.setState = function(newState) {
-
+  console.log('set state called');
   history.pushState(newState.state, newState.title, newState.url);
 
   if (newState.state == 'Entry') {

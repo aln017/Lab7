@@ -31,6 +31,9 @@ window.addEventListener('popstate', function(event) {
  * Settings icon event listener
  */
 settings.addEventListener('click', function(event) {
+  if (window.location.hash == '#settings') {
+    return;
+  }
   newState = {
     state: 'Settings',
     title: 'Settings',
@@ -55,7 +58,6 @@ title.addEventListener('click', function() {
  * Assigns event listeners to entries, deletes old and inserts new entry
  */
 function helper(newPost, i, entry) {
-  console.log('wow');
   newPost.addEventListener('click', function(event) {
     console.log('hah you got bamboozled');
     newState = {
@@ -70,6 +72,22 @@ function helper(newPost, i, entry) {
     sing = document.createElement('entry-page');
     document.body.appendChild(sing);
     sing.entry = entry;
+  });
+}
+
+
+/*
+ * Register service worker
+ */ 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
   });
 }
 
