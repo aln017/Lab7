@@ -9,11 +9,11 @@ const title = document.getElementsByTagName('h1')[0];
 
 var newState = {
   state: 'Home',
-  title: document.getElementsByTagName('h1')[0].innerHTML,
+  title: title.innerHTML,
   url: curURL
 };
 
-const setState = router.setState(newState);
+const setState = router.setState(newState, true);
 
 /*
  * Popstate event triggered when back arrow is clicked
@@ -22,9 +22,9 @@ window.addEventListener('popstate', function(event) {
   newState = {
     state: this.history.state,
     title: '',
-    url: curURL,
+    url: curURL
     }
-  router.setState(newState);
+  router.setState(newState, false);
 });
 
 /*
@@ -34,12 +34,13 @@ settings.addEventListener('click', function(event) {
   if (window.location.hash == '#settings') {
     return;
   }
+  //title = 'Settings';
   newState = {
     state: 'Settings',
     title: 'Settings',
     url: curURL + '#settings'
   };
-  router.setState(newState);
+  router.setState(newState, true);
 });
 
 /*
@@ -51,7 +52,7 @@ title.addEventListener('click', function() {
     title: 'Journal Entries',
     url: curURL
   }
-  router.setState(newState);
+  router.setState(newState, true);
 });
 
 /* 
@@ -59,19 +60,20 @@ title.addEventListener('click', function() {
  */
 function helper(newPost, i, entry) {
   newPost.addEventListener('click', function(event) {
-    console.log('hah you got bamboozled');
     newState = {
-      state: 'Entry',
+      state: 'Entry ' + i,
       title: 'Entry ' + i,
       url: curURL + '#entry' + i 
     }
-    router.setState(newState);
+
+    router.setState(newState, true);
     
     var sing = document.querySelector('entry-page');
     sing.remove();
     sing = document.createElement('entry-page');
     document.body.appendChild(sing);
     sing.entry = entry;
+
   });
 }
 

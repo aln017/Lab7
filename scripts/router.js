@@ -6,26 +6,28 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function(newState) {
-  console.log('set state called');
-  history.pushState(newState.state, newState.title, newState.url);
+router.setState = function(newState, add) {
 
-  if (newState.state == 'Entry') {
-    console.log('sing entry');
-    document.getElementsByTagName('h1')[0].innerHTML = newState.title;
+  if (add == true) {
+    history.pushState(newState.state, newState.title, newState.url);
+  }
+
+  // reset page
+  document.body.classList.remove('settings');
+  document.body.classList.remove('single-entry');
+
+  if ((newState.state).includes('Entry')) {
+    document.getElementsByTagName('h1')[0].innerHTML = newState.state;
     document.body.classList.add('single-entry');
   }
 
   if (newState.state == 'Home') {
     document.getElementsByTagName('h1')[0].innerHTML = 'Journal Entries';
-    document.body.classList.remove('settings');
-    document.body.classList.remove('single-entry');
   }
 
   if (newState.state == 'Settings') {
-    document.getElementsByTagName('h1')[0].innerHTML = newState.title;
+    document.getElementsByTagName('h1')[0].innerHTML = 'Settings';
     document.body.classList.add('settings');
-    document.body.classList.remove('single-entry');
   }
   
   /**
